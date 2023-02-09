@@ -7,19 +7,35 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => res.send("Server running!"));
 
-app.get('/users', function(request, response) {
-	res.send(data)
-	
+app.get('/api/users', function(request, response) {
+	res.status(200);
+	response.send(data)
 });
 
-app.post('/login', function(request, response) {
+app.get('/api/users/:id', function(request, response) {
+	let id = request.params.id;
+	if(id == null) response.send("User not found")
+	var user = data.filter(function (el) {
+	return el._id == id;
+	});
+	if(user == null || user.length ==0){
+		res.status(404);
+		response.send("User not found")
+	}
+	else{
+		res.status(200);
+		response.send(user[0])
+	}
+});
+
+app.post('/api/login', function(request, response) {
 	// Capture the input fields
 	let username = request.body.username;
 	let password = request.body.password;
 	// Ensure the input fields exists and are not empty
 	if (username && password) {
-		if(username == "hari" && password =="test"){
-		res.status(201);
+		if(username == "testemail@dal.ca" && password =="Test@123"){
+		res.status(200);
 		response.send('Correct Username and/or Password!');}
 		else{
 		res.status(401);
