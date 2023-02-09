@@ -36,7 +36,7 @@ app.post('/api/login', function(request, response) {
 	if (username && password) {
 		if(username == "testemail@dal.ca" && password =="Test@123"){
 		response.status(200);
-		response.send('Correct Username and/or Password!');}
+		response.send('Correct Username and Password!');}
 		else{
 		response.status(401);
 		response.send('Incorrect Username and/or Password!');}
