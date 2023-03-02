@@ -12,22 +12,22 @@ app.get("/", (req, res) => res.send("Server running!"));
 app.get("/api/users", function (request, response) {
   response.status(200);
   response.setHeader("Content-Type", "application/json");
-  response.send(JSON.stringify(data));
+  response.json(data);
 });
 
 app.get("/api/users/:id", function (request, response) {
   let id = request.params.id;
   response.setHeader("Content-Type", "application/json");
-  if (id == null) response.send(JSON.stringify("{'message':'User not found'}"));
+  if (id == null) response.json({ message: "User not found" });
   var user = data.filter(function (el) {
     return el._id == id;
   });
   if (user == null || user.length == 0) {
     response.status(404);
-    response.send(JSON.stringify("{'message':'User not found'}"));
+    response.json({ message: "User not found" });
   } else {
     response.status(200);
-    response.send(JSON.stringify(user[0]));
+    response.json(user[0]);
   }
 });
 
@@ -40,18 +40,14 @@ app.post("/api/login", function (request, response) {
   if (username && password) {
     if (username == "testemail@dal.ca" && password == "Test@123") {
       response.status(200);
-      response.send(JSON.stringify("{'message':'Login success!'}"));
+      response.json({ message: "Login success!" });
     } else {
       response.status(401);
-      response.send(
-        JSON.stringify("{'message':'Incorrect Username and/or Password!'}")
-      );
+      response.json({ message: "Incorrect Username and/or Password!" });
     }
   } else {
     response.status(401);
-    response.send(
-      JSON.stringify("{'message':'Please Enter Username and Password!'}")
-    );
+    response.json({ message: "Please Enter Username and Password!" });
     response.end();
   }
 });
